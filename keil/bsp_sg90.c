@@ -1,9 +1,10 @@
 #include "bsp_sg90.h"
 #include "board.h"
 #include "stdio.h"
+#include "uart.h"
 unsigned int Servo_Angle = 0;//舵机角度
 //计时器中结构体
-
+uint32_t tick_counter;
 motorcontrol motors[4];
 /******************************************************************
        配置占空比 范围 0 ~ (per-1)
@@ -79,69 +80,132 @@ unsigned int Get_Servo_Angle(void)
 
 void TIMER_0_INST_IRQHandler(void) {
     // 每10ms触发一次
-    static uint32_t tick_counter = 0;
+//	static uint32_t tick_counter;
+
     tick_counter++;
-			// 检查是否需要更新舵机角度
-		if (motors[0].state == ROTATING_STATE) {
-			// 每100ms更新一次角度 (10 * 10ms = 100ms)
-			if (tick_counter % 2 == 0) {
-				// 增加角度（每10ms增加1度）
-				if (motors[0].current_angle > motors[0].target_angle) {
-					motors[0].current_angle--;
-					Set_Servo_Angle(1,motors[0].current_angle);
-					motors[0].rotation_counter++;
-				} 
-				// 完成旋转
-				else {
-					motors[0].state = IDLE_STATE;  // 返回空闲状态
-				}
-			}
-		}
-		if (motors[1].state == ROTATING_STATE) {
-			// 每100ms更新一次角度 (10 * 10ms = 100ms)
-			if (tick_counter % 2 == 0) {
-				// 增加角度（每10ms增加1度）
-				if (motors[1].current_angle > motors[1].target_angle) {
-					motors[1].current_angle--;
-					Set_Servo_Angle(2,motors[1].current_angle);
-					motors[1].rotation_counter++;
-				} 
-				// 完成旋转
-				else {
-					motors[1].state = IDLE_STATE;  // 返回空闲状态
-				}
-			}
-		}
-
-			if (motors[2].state == ROTATING_STATE) {
-			// 每100ms更新一次角度 (10 * 10ms = 100ms)
-			if (tick_counter % 2 == 0) {
-				// 增加角度（每10ms增加1度）
-				if (motors[2].current_angle > motors[2].target_angle) {
-					motors[2].current_angle--;
-					Set_Servo_Angle(3,motors[2].current_angle);
-					motors[2].rotation_counter++;
-				} 
-				// 完成旋转
-				else {
-					motors[2].state = IDLE_STATE;  // 返回空闲状态
-				}
-			}
-		}
-
-		if (motors[3].state == ROTATING_STATE) {
-			// 每100ms更新一次角度 (10 * 10ms = 100ms)
-			if (tick_counter % 2 == 0) {
-				// 增加角度（每10ms增加1度）
-				if (motors[3].current_angle > motors[3].target_angle) {
-					motors[3].current_angle--;
-					Set_Servo_Angle(4,motors[3].current_angle);
-					motors[3].rotation_counter++;
-				} 
-				// 完成旋转
-				else {
-					motors[3].state = IDLE_STATE;  // 返回空闲状态
-				}
-			}
-		}
+	servo_progress1();
 }
+
+//挂钩打开
+void servo_progress1(void)
+{
+    for (int i = 0; i < 4; i++) {
+        if (motors[i].state == ROTATING_STATE) {
+            // 每2次tick更新一次角度（相当于每10ms更新，假设tick每5ms递增）
+            if (tick_counter % 2 == 0) {
+                if (motors[i].current_angle > motors[i].target_angle) {
+                    motors[i].current_angle--;
+                    Set_Servo_Angle(i + 1, motors[i].current_angle);  // 舵机编号从1开始
+                    motors[i].rotation_counter++;
+                } else {
+                    motors[i].state = IDLE_STATE;  // 完成旋转，进入空闲状态
+                }
+            }
+        }
+    }
+}
+//360舵机正转2s-停止5s-反转2s-停止
+void servo_progress2(void)
+{
+    for (int i = 0; i < 4; i++) {
+		if (servo[i].command_received)
+		{
+			switch (servo[i].step)
+			{
+				case 0:
+					Set_Servo_Angle(1, 0); // 正转
+					servo[i].start_tick = tick_counter;
+					servo[i].step = 1;
+					break;
+
+				case 1:
+					if (tick_counter - servo[i].start_tick >= 200)
+					{
+						Set_Servo_Angle(1, 85); // 停止
+						servo[i].step = 2;
+					}
+					break;
+
+				case 2:
+					if (tick_counter - servo[i].start_tick >= 700)
+					{
+						Set_Servo_Angle(1, 180); // 反转
+
+					}
+					if (tick_counter - servo[i].start_tick >= 900)
+					{
+					Set_Servo_Angle(1, 85);	
+					servo[i].command_received=0;
+					}
+					break;
+			}
+		}
+	}
+}
+//void servo_progress1(void)
+//{
+//		// 检查是否需要更新舵机角度
+//	if (motors[0].state == ROTATING_STATE) {
+//		// 每100ms更新一次角度 (10 * 10ms = 100ms)
+//		if (tick_counter % 2 == 0) {
+//			// 增加角度（每10ms增加1度）
+//			if (motors[0].current_angle > motors[0].target_angle) {
+//				motors[0].current_angle--;
+//				Set_Servo_Angle(1,motors[0].current_angle);
+//				motors[0].rotation_counter++;
+//			} 
+//			// 完成旋转
+//			else {
+//				motors[0].state = IDLE_STATE;  // 返回空闲状态
+//			}
+//		}
+//	}
+//	if (motors[1].state == ROTATING_STATE) {
+//		// 每100ms更新一次角度 (10 * 10ms = 100ms)
+//		if (tick_counter % 2 == 0) {
+//			// 增加角度（每10ms增加1度）
+//			if (motors[1].current_angle > motors[1].target_angle) {
+//				motors[1].current_angle--;
+//				Set_Servo_Angle(2,motors[1].current_angle);
+//				motors[1].rotation_counter++;
+//			} 
+//			// 完成旋转
+//			else {
+//				motors[1].state = IDLE_STATE;  // 返回空闲状态
+//			}
+//		}
+//	}
+
+//		if (motors[2].state == ROTATING_STATE) {
+//		// 每100ms更新一次角度 (10 * 10ms = 100ms)
+//		if (tick_counter % 2 == 0) {
+//			// 增加角度（每10ms增加1度）
+//			if (motors[2].current_angle > motors[2].target_angle) {
+//				motors[2].current_angle--;
+//				Set_Servo_Angle(3,motors[2].current_angle);
+//				motors[2].rotation_counter++;
+//			} 
+//			// 完成旋转
+//			else {
+//				motors[2].state = IDLE_STATE;  // 返回空闲状态
+//			}
+//		}
+//	}
+
+//	if (motors[3].state == ROTATING_STATE) {
+//		// 每100ms更新一次角度 (10 * 10ms = 100ms)
+//		if (tick_counter % 2 == 0) {
+//			// 增加角度（每10ms增加1度）
+//			if (motors[3].current_angle > motors[3].target_angle) {
+//				motors[3].current_angle--;
+//				Set_Servo_Angle(4,motors[3].current_angle);
+//				motors[3].rotation_counter++;
+//			} 
+//			// 完成旋转
+//			else {
+//				motors[3].state = IDLE_STATE;  // 返回空闲状态
+//			}
+//		}
+//	}	
+
+//}

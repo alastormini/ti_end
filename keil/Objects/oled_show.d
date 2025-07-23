@@ -55,4 +55,4 @@
   ..\source\ti\driverlib\dl_vref.h ..\source\ti\driverlib\dl_wwdt.h \
   ..\source\ti\driverlib\m0p\dl_interrupt.h \
   ..\source\ti\driverlib\m0p\dl_systick.h key.h oled.h board.h \
-  oled_show.h
+  oled_show.h bsp_sg90.h uart.h

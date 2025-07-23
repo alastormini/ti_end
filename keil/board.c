@@ -39,11 +39,11 @@ void board_init(void)
     //使能定时器中断
     NVIC_EnableIRQ(TIMER_0_INST_INT_IRQN);
 	NVIC_EnableIRQ(TIMER_1_INST_INT_IRQN);
-
-	Set_Servo_Angle(1,160);
-	Set_Servo_Angle(2,160);
-	Set_Servo_Angle(3,160);
-	Set_Servo_Angle(4,160);
+//挂钩初始化角度
+//	Set_Servo_Angle(1,160);
+//	Set_Servo_Angle(2,160);
+//	Set_Servo_Angle(3,160);
+//	Set_Servo_Angle(4,160);
 }
 
 //搭配滴答定时器实现的精确us延时

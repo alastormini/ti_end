@@ -25,6 +25,10 @@ typedef struct{
 	volatile uint32_t rotation_counter ;//计数器
 	volatile uint8_t state;//状态
 }motorcontrol;
+void servo_progress1(void);
+void servo_progress2(void);
+
+extern uint32_t tick_counter;
 
 extern motorcontrol motors[];
 

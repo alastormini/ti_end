@@ -11,14 +11,14 @@ volatile unsigned char uart_data = 0;
 int main(void)
 {
 
-      //å¼€å‘æ¿åˆå§‹åŒ–
+    //¿ª·¢°å³õÊ¼»¯
 	board_init();
-	oled_show();
-
+	//oled³õÊ¼ÏÔÊ¾
+	oled_first();
       while(1)
       {
-		oled_progress();
-		delay_ms(10);
-		process();
+			oled_progress();
+			uart_process();
+			servo_progress2();
       }
 }

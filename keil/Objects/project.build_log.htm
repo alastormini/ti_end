@@ -21,31 +21,29 @@ Target DLL:      CMSIS_AGDI.dll V1.33.18.0
 Dialog DLL:      TARMCM1.DLL V1.14.6.0
  
 <h2>Project:</h2>
-d:\ti\project\ti_end\keil\project.uvprojx
+D:\ti\project\ti_end\keil\project.uvprojx
 Project File Date:  07/09/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.22', folder: 'D:\develop\keil5mdk\ARM\ARMCLANG\Bin'
 Build target 'Target 1'
-compiling key.c...
-compiling empty.c...
-oled_show.c(138): warning: 18 enumeration values not handled in switch: 'DL_TIMER_IIDX_LOAD', 'DL_TIMER_IIDX_CC0_DN', 'DL_TIMER_IIDX_CC1_DN'... [-Wswitch]
-  138 |     switch (DL_TimerG_getPendingInterrupt(TIMER_1_INST))
-      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../source\ti/driverlib/dl_timerg.h(926): note: expanded from macro 'DL_TimerG_getPendingInterrupt'
-  926 | #define DL_TimerG_getPendingInterrupt               DL_Timer_getPendingInterrupt
-      |                                                     ^
-1 warning generated.
-compiling oled_show.c...
-compiling bsp_sg90.c...
-compiling buzzer.c...
+uart.c(248): warning: array index 4 is past the end of the array (that has type 'servos[4]') [-Warray-bounds]
+  248 |                                         servo[4].command_received = 1; // 设置标志
+      |                                         ^     ~
+uart.c(17): note: array 'servo' declared here
+   17 | servos servo[4];
+      | ^
+uart.c(249): warning: array index 4 is past the end of the array (that has type 'servos[4]') [-Warray-bounds]
+  249 |                                         servo[4].step = 0;             // 重置状态
+      |                                         ^     ~
+uart.c(17): note: array 'servo' declared here
+   17 | servos servo[4];
+      | ^
+2 warnings generated.
 compiling uart.c...
-compiling ti_msp_dl_config.c...
-compiling board.c...
-compiling oled.c...
 linking...
-Program Size: Code=14208 RO-data=7216 RW-data=0 ZI-data=2504  
-".\Objects\project.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=14740 RO-data=7332 RW-data=4 ZI-data=2876  
+".\Objects\project.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -57,7 +55,7 @@ Package Vendor: TexasInstruments
 <h2>Collection of Component include folders:</h2>
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

@@ -13,11 +13,9 @@ uint8_t select_flag;
 
 //0xAA 0x01 0x01 0x  0xFF
 
-
 // 按键检测相关
 unsigned char keynum = 1;
 unsigned char user_pwd[2] = {0};
-//unsigned char user_pwd[6] = {0};
 unsigned char flag1 = 0;
 unsigned char key4_flag;
 unsigned char key1_flag;
@@ -40,18 +38,19 @@ void send_uart_packet(uint8_t cmd, uint8_t keynum)
         uart_send_char(UART_1_INST, packet[i]);
     }
 }
-//oled通过按键设置坐标1，2同时发送给无人机
+
+//oled通过按键设置坐标1，2同时发送位置信息给无人机
 //key1确定  key2数字递增  key3数字递减  key4模式选择
 
 void oled_progress(void)
 {
-		KeyNum=Key_GetNum();
-	//->按键确定
-		if (KeyNum == 1)
+	KeyNum=Key_GetNum();
+//->按键确定
+	if (KeyNum == 1)
+	{
+		if(key1_flag==1)
 		{
-//			range1++;		
-			if(key1_flag==1){
-				range1++;
+			range1++;
 			switch(select_flag%3)
 			{
 				case 1:
@@ -109,45 +108,45 @@ void oled_progress(void)
 	}
 
 		//下一位->数字递减
-		if (KeyNum == 5&&key4_flag==1)
-		{
-			if (keynum > 1) {
-				keynum--;
-			}
-			OLED_ShowNum(0, 20, keynum, 2, 16, 1);
-			OLED_Refresh();
+	if (KeyNum == 5&&key4_flag==1)
+	{
+		if (keynum > 1) {
+			keynum--;
 		}
-		//上一位->数字递增
-		if (KeyNum == 2&&key4_flag==1)
+		OLED_ShowNum(0, 20, keynum, 2, 16, 1);
+		OLED_Refresh();
+	}
+	//上一位->数字递增
+	if (KeyNum == 2&&key4_flag==1)
+	{
+		
+		keynum++;
+		if(keynum == 13){keynum=1;}
+		OLED_ShowNum(0, 20, keynum, 2, 16, 1);
+		OLED_Refresh();
+	}
+	//数据发送给无人机->模式选择
+	if (KeyNum == 4&&key4_flag==0)
+	{
+		key1_flag=1;
+		select_flag++;
+		switch(select_flag%3)
 		{
-			
-			keynum++;
-			if(keynum == 13){keynum=1;}
-			OLED_ShowNum(0, 20, keynum, 2, 16, 1);
-			OLED_Refresh();
+			case 1:
+				OLED_Clear();
+				OLED_ShowString(0,0, (uint8_t *)"mode l ", 16, 1);
+				break;
+			case 2:
+				OLED_Clear();
+				OLED_ShowString(0,0, (uint8_t *)"mode 2 ", 16, 1);
+				break;
+			case 0:
+				OLED_Clear();
+				OLED_ShowString(0,0, (uint8_t *)"mode 3 ", 16, 1);
+				break;
 		}
-		//数据发送给无人机->模式选择
-		if (KeyNum == 4&&key4_flag==0)
-		{
-			key1_flag=1;
-			select_flag++;
-			switch(select_flag%3)
-			{
-				case 1:
-					OLED_Clear();
-					OLED_ShowString(0,0, (uint8_t *)"mode l ", 16, 1);
-					break;
-				case 2:
-					OLED_Clear();
-					OLED_ShowString(0,0, (uint8_t *)"mode 2 ", 16, 1);
-					break;
-				case 0:
-					OLED_Clear();
-					OLED_ShowString(0,0, (uint8_t *)"mode 3 ", 16, 1);
-					break;
-			}
-		}
-			OLED_Refresh();
+	}
+		OLED_Refresh();
 }
 
 //oled初始化页面，显示可选的三种模式
@@ -222,114 +221,3 @@ void TIMER_1_INST_IRQHandler(void)
 		}	 
 	}
 }
-//void oled_progress(void)
-//{
-//		static uint8_t select_flag;
-//		KeyNum=Key_GetNum();
-//	//->按键确定
-//		if (KeyNum == 1)
-//		{
-//				user_pwd[0]=1;
-//				oled_show();
-//				delay_ms(100);
-//				oled_send();
-//				memset(user_pwd, 0, sizeof(user_pwd));
-//				oled_show();
-////				uart_send_string(UART_1_INST,"ok");
-//		}
-//		if (KeyNum == 6)
-//		{
-//				user_pwd[0]=2;
-//				oled_show();
-//				delay_ms(100);
-//				oled_send();
-//				memset(user_pwd, 0, sizeof(user_pwd));
-//				oled_show();
-////				uart_send_string(UART_1_INST,"ok");
-//		}
-//	//数字递增
-//		if (KeyNum == 3)
-//		{
-//				keynum++;
-//				if(keynum<=10)
-//				{
-//						if(keynum==10)keynum=0;
-//						user_pwd[5]=keynum;
-//				}
-//				oled_show();
-//		}
-//		//下一位->数字递减
-//		if (KeyNum == 5)
-//		{
-//			if(inputflag<=4)
-//			{
-//				for(range1=0;range1<=4;range1++)
-//				{
-//					keynum=0;
-//					user_pwd[range1]=user_pwd[range1+1];
-//				}
-//				inputflag++;
-//				user_pwd[5]=0;
-//				oled_show();
-//			}
-
-//		}
-//		//上一位->数字递增
-//		if (KeyNum == 2)
-//		{
-//			if(inputflag>=1)
-//			{
-//					for(range1=5;range1>=1;range1--)
-//					{
-//						user_pwd[range1]=user_pwd[range1-1];	
-//					}
-//					user_pwd[0]=0;
-//					oled_show();
-//					inputflag--;
-//				}
-//		}
-//		//数据发送给无人机->模式选择
-//		if (KeyNum == 4)
-//		{
-//				OLED_Clear();
-//				OLED_Refresh();
-//				flag1++;
-//				if(flag1%2==0)
-//				{	
-//					memset(user_pwd, 0, sizeof(user_pwd));
-//					oled_show();
-//				}else{
-//					oled_send();
-//					OLED_ShowString(0,0,(uint8_t *)"Send complete",16,1);
-//					inputflag=0;
-//				}
-
-//		}
-//			OLED_ShowNum(0,50,i++,5,12,1);
-//			OLED_Refresh();
-//}
-
-//void oled_show(void)
-//{
-//	
-//	unsigned char range;
-//	OLED_ShowString(0,0, (uint8_t *)"change position", 16, 1);
-//	for(range=0;range<=5;range++)
-//	{
-//		OLED_ShowNum(0+16*range, 20, user_pwd[range], 1, 16, 1);
-//	}
-//	OLED_Refresh();
-//}
-//void oled_send(void)
-//{
-//	char buffer[10];  // 足够放10个数字 
-
-//    for (int i = 0; i < 6; i++) {
-//        buffer[i] = '0' + user_pwd[i];  // 数字转字符
-//    }
-//    buffer[6] = '\0';  // 字符串结束符
-
-//    uart_send_string(UART_1_INST,buffer);
-//    uart_send_string(UART_1_INST,"\r\n");  // 换行，方便查看
-
-//}

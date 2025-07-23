@@ -11,9 +11,9 @@ volatile unsigned char uart_data = 0;
 int main(void)
 {
 
-    //¿ª·¢°å³õÊ¼»¯
+    //å¼€å‘æ¿åˆå§‹åŒ–
 	board_init();
-	//oled³õÊ¼ÏÔÊ¾
+	//oledåˆå§‹æ˜¾ç¤º
 	oled_first();
       while(1)
       {

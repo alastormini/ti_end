@@ -86,7 +86,7 @@ void TIMER_0_INST_IRQHandler(void) {
 	servo_progress1();
 }
 
-//挂钩打开
+//控制舵机旋转特定角度
 void servo_progress1(void)
 {
     for (int i = 0; i < 4; i++) {
@@ -142,70 +142,3 @@ void servo_progress2(void)
 		}
 	}
 }
-//void servo_progress1(void)
-//{
-//		// 检查是否需要更新舵机角度
-//	if (motors[0].state == ROTATING_STATE) {
-//		// 每100ms更新一次角度 (10 * 10ms = 100ms)
-//		if (tick_counter % 2 == 0) {
-//			// 增加角度（每10ms增加1度）
-//			if (motors[0].current_angle > motors[0].target_angle) {
-//				motors[0].current_angle--;
-//				Set_Servo_Angle(1,motors[0].current_angle);
-//				motors[0].rotation_counter++;
-//			} 
-//			// 完成旋转
-//			else {
-//				motors[0].state = IDLE_STATE;  // 返回空闲状态
-//			}
-//		}
-//	}
-//	if (motors[1].state == ROTATING_STATE) {
-//		// 每100ms更新一次角度 (10 * 10ms = 100ms)
-//		if (tick_counter % 2 == 0) {
-//			// 增加角度（每10ms增加1度）
-//			if (motors[1].current_angle > motors[1].target_angle) {
-//				motors[1].current_angle--;
-//				Set_Servo_Angle(2,motors[1].current_angle);
-//				motors[1].rotation_counter++;
-//			} 
-//			// 完成旋转
-//			else {
-//				motors[1].state = IDLE_STATE;  // 返回空闲状态
-//			}
-//		}
-//	}
-
-//		if (motors[2].state == ROTATING_STATE) {
-//		// 每100ms更新一次角度 (10 * 10ms = 100ms)
-//		if (tick_counter % 2 == 0) {
-//			// 增加角度（每10ms增加1度）
-//			if (motors[2].current_angle > motors[2].target_angle) {
-//				motors[2].current_angle--;
-//				Set_Servo_Angle(3,motors[2].current_angle);
-//				motors[2].rotation_counter++;
-//			} 
-//			// 完成旋转
-//			else {
-//				motors[2].state = IDLE_STATE;  // 返回空闲状态
-//			}
-//		}
-//	}
-
-//	if (motors[3].state == ROTATING_STATE) {
-//		// 每100ms更新一次角度 (10 * 10ms = 100ms)
-//		if (tick_counter % 2 == 0) {
-//			// 增加角度（每10ms增加1度）
-//			if (motors[3].current_angle > motors[3].target_angle) {
-//				motors[3].current_angle--;
-//				Set_Servo_Angle(4,motors[3].current_angle);
-//				motors[3].rotation_counter++;
-//			} 
-//			// 完成旋转
-//			else {
-//				motors[3].state = IDLE_STATE;  // 返回空闲状态
-//			}
-//		}
-//	}	
-
-//}

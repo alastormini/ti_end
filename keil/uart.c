@@ -6,14 +6,7 @@
 #include "oled_show.h"
 #include "oled.h"
 #include "uart.h"
-//uint32_t servo1_start_tick = 0;
-//uint8_t servo1_step = 0;
-//uint8_t servo1_command_received = 0; // 新增标志位
-//typedef struct {
-//    uint32_t start_tick;
-//    uint8_t step;
-//    uint8_t command_received;
-//} servos;
+
 servos servo[4];
 typedef struct {
     uint8_t flag;
@@ -26,13 +19,6 @@ uint8_t uart1_receivedData[4][80];
 uint8_t uart3_receivedData[4][80];
 UART_RxBuffer uart1_rx = {0};
 UART_RxBuffer uart3_rx = {0};
-
-//uint8_t receivedData[4][80];
-//uint8_t flag=0;//接受标志
-//int buflen=0;//数据包数量
-//int count=0;;//接收数组字节数
-//int bfw=0;//写索引
-//int bfr=0;//读索引
 uint8_t oled_pack_flag;
 
 void uart_send_char(UART_Regs *uart,char ch)
@@ -132,9 +118,9 @@ void UART_3_INST_IRQHandler(void) {
 //帧头0xAA 编号 状态 帧尾0xFF
 //编号0x01~0x04舵机 0x05~0x06激光 0x07蜂鸣器 0x09oled信息接收
 //舵机打开				0xAA 01~04 0x01 FF
-//360舵机正转-停止-反转 0xAA 01~04 0x02 FF
-//180舵机控制摄像头90	0xAA 01~04 0x03 FF
-//激光打开				0xAA 05~06 0x01 FF
+//360舵机正转-停止-反转  0xAA 01~04 0x02 FF
+//180舵机控制摄像头90    0xAA 01~04 0x03 FF
+//激光打开	 			0xAA 05~06 0x01 FF
 //激光关闭				0xAA 05~06 0x00 FF
 //蜂鸣器响				0xAA 08    次数 FF
 //oled信息接收			0xAA 09	   模式 数据 成功/失败    FF
@@ -147,7 +133,8 @@ void uart_process(void)
         sprintf(buf, "%02X %02X %02X %02X %02X\n", uart1_receivedData[uart1_rx.bfr][0],uart1_receivedData[uart1_rx.bfr][1], uart1_receivedData[uart1_rx.bfr][2],uart1_receivedData[uart1_rx.bfr][3],uart1_receivedData[uart1_rx.bfr][4]);
         uart_send_string(UART_1_INST, buf);
 		
-		if(uart1_receivedData[uart1_rx.bfr][0]==0xAA&&(uart1_receivedData[uart1_rx.bfr][3]==0xFF||uart1_receivedData[uart1_rx.bfr][5]==0xFF)){
+		if(uart1_receivedData[uart1_rx.bfr][0]==0xAA&&(uart1_receivedData[uart1_rx.bfr][3]==0xFF||uart1_receivedData[uart1_rx.bfr][5]==0xFF))
+	{
 		switch(uart1_receivedData[uart1_rx.bfr][1])
 		{
 			case 0x01://舵机一号
@@ -222,7 +209,7 @@ void uart_process(void)
 					servo[3].step = 0;             // 重置状态
 				}
 				else if(uart1_receivedData[uart1_rx.bfr][2]==0x03)
-					{
+				{
 					// 开始旋转序列
 					motors[2].state = ROTATING_STATE;
 					motors[2].current_angle = 0;       // 从0°开始
@@ -249,7 +236,7 @@ void uart_process(void)
 					servo[4].step = 0;             // 重置状态
 				}
 				else if(uart1_receivedData[uart1_rx.bfr][2]==0x03)
-					{
+				{
 					// 开始旋转序列
 					motors[3].state = ROTATING_STATE;
 					motors[3].current_angle = 0;       // 从0°开始

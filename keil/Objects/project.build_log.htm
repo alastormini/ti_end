@@ -27,23 +27,59 @@ Project File Date:  07/09/2025
 <h2>Output:</h2>
 *** Using Compiler 'V6.22', folder: 'D:\develop\keil5mdk\ARM\ARMCLANG\Bin'
 Build target 'Target 1'
-uart.c(248): warning: array index 4 is past the end of the array (that has type 'servos[4]') [-Warray-bounds]
-  248 |                                         servo[4].command_received = 1; // 设置标志
+uart.c(290): warning: array index 4 is past the end of the array (that has type 'servos[4]') [-Warray-bounds]
+  290 |                                         servo[4].command_received = 1; // 设置标志
       |                                         ^     ~
-uart.c(17): note: array 'servo' declared here
-   17 | servos servo[4];
+uart.c(10): note: array 'servo' declared here
+   10 | servos servo[4];
       | ^
-uart.c(249): warning: array index 4 is past the end of the array (that has type 'servos[4]') [-Warray-bounds]
-  249 |                                         servo[4].step = 0;             // 重置状态
+uart.c(291): warning: array index 4 is past the end of the array (that has type 'servos[4]') [-Warray-bounds]
+  291 |                                         servo[4].step = 0;             // 重置状态
       |                                         ^     ~
-uart.c(17): note: array 'servo' declared here
-   17 | servos servo[4];
+uart.c(10): note: array 'servo' declared here
+   10 | servos servo[4];
       | ^
-2 warnings generated.
+uart.c(388): warning: passing 'char[17]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  388 |     OLED_ShowString(0, 50, "location1 set ok", 12, 1);  // 显示
+      |                            ^~~~~~~~~~~~~~~~~~
+.\oled.h(51): note: passing argument to parameter 'chr' here
+   51 | void OLED_ShowString(u8 x,u8 y,u8 *chr,u8 size1,u8 mode);
+      |                                    ^
+uart.c(391): warning: passing 'char[21]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  391 |     OLED_ShowString(0, 50, "location1 set failed", 12, 1);  // 显示
+      |                            ^~~~~~~~~~~~~~~~~~~~~~
+.\oled.h(51): note: passing argument to parameter 'chr' here
+   51 | void OLED_ShowString(u8 x,u8 y,u8 *chr,u8 size1,u8 mode);
+      |                                    ^
+uart.c(394): warning: passing 'char[17]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  394 |     OLED_ShowString(0, 50, "location2 set ok", 12, 1);  // 显示
+      |                            ^~~~~~~~~~~~~~~~~~
+.\oled.h(51): note: passing argument to parameter 'chr' here
+   51 | void OLED_ShowString(u8 x,u8 y,u8 *chr,u8 size1,u8 mode);
+      |                                    ^
+uart.c(397): warning: passing 'char[21]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  397 |     OLED_ShowString(0, 50, "location2 set failed", 12, 1);  // 显示
+      |                            ^~~~~~~~~~~~~~~~~~~~~~
+.\oled.h(51): note: passing argument to parameter 'chr' here
+   51 | void OLED_ShowString(u8 x,u8 y,u8 *chr,u8 size1,u8 mode);
+      |                                    ^
+uart.c(400): warning: passing 'char[17]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  400 |     OLED_ShowString(0, 50, "mode2 set failed", 12, 1);  // 显示
+      |                            ^~~~~~~~~~~~~~~~~~
+.\oled.h(51): note: passing argument to parameter 'chr' here
+   51 | void OLED_ShowString(u8 x,u8 y,u8 *chr,u8 size1,u8 mode);
+      |                                    ^
+uart.c(403): warning: passing 'char[13]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  403 |     OLED_ShowString(0, 50, "mode2 set ok", 12, 1);  // 显示
+      |                            ^~~~~~~~~~~~~~
+.\oled.h(51): note: passing argument to parameter 'chr' here
+   51 | void OLED_ShowString(u8 x,u8 y,u8 *chr,u8 size1,u8 mode);
+      |                                    ^
+8 warnings generated.
 compiling uart.c...
 linking...
-Program Size: Code=14740 RO-data=7332 RW-data=4 ZI-data=2876  
-".\Objects\project.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=15852 RO-data=7396 RW-data=4 ZI-data=2884  
+".\Objects\project.axf" - 0 Error(s), 8 Warning(s).
 
 <h2>Software Packages used:</h2>
 

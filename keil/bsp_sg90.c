@@ -91,19 +91,56 @@ void servo_progress1(void)
 {
     for (int i = 0; i < 4; i++) {
         if (motors[i].state == ROTATING_STATE) {
-            // 每2次tick更新一次角度（相当于每10ms更新，假设tick每5ms递增）
             if (tick_counter % 2 == 0) {
-                if (motors[i].current_angle > motors[i].target_angle) {
-                    motors[i].current_angle--;
-                    Set_Servo_Angle(i + 1, motors[i].current_angle);  // 舵机编号从1开始
-                    motors[i].rotation_counter++;
-                } else {
-                    motors[i].state = IDLE_STATE;  // 完成旋转，进入空闲状态
+                if (servo_flag == 1) {
+                    if (motors[i].current_angle > motors[i].target_angle) {
+                        motors[i].current_angle--;
+                        Set_Servo_Angle(i + 1, motors[i].current_angle);
+                    } else {
+                        motors[i].state = IDLE_STATE;
+                        servo_flag = 0;
+                    }
+                } else if (servo_flag == 2) {
+                    if (motors[i].current_angle < motors[i].target_angle) {
+                        motors[i].current_angle++;
+                        Set_Servo_Angle(i + 1, motors[i].current_angle);
+                    } else {
+                        motors[i].state = IDLE_STATE;
+                        servo_flag = 0;
+                    }
                 }
             }
         }
     }
 }
+//void servo_progress1(void)
+//{
+//    for (int i = 0; i < 4; i++) {
+//        if (motors[i].state == ROTATING_STATE) {
+//            // 每2次tick更新一次角度（相当于每10ms更新，假设tick每5ms递增）
+//            if (tick_counter % 2 == 0&&servo_flag==1) {
+//                if (motors[i].current_angle > motors[i].target_angle) {
+//                    motors[i].current_angle--;
+//                    Set_Servo_Angle(i + 1, motors[i].current_angle);  // 舵机编号从1开始
+//                    motors[i].rotation_counter++;
+//					
+//                }else{servo_flag=0;}
+//			}
+//            else if 
+//				(tick_counter % 2 == 0&&servo_flag==2) {
+//                if (motors[i].current_angle < motors[i].target_angle) {
+//                    motors[i].current_angle++;
+//                    Set_Servo_Angle(i + 1, motors[i].current_angle);  // 舵机编号从1开始
+//                    motors[i].rotation_counter++;
+//                } else{servo_flag=0;}
+//				}
+//				else {
+//                    motors[i].state = IDLE_STATE;  // 完成旋转，进入空闲状态
+//                }
+//            
+//        }
+//    }
+//}
 //360舵机正转2s-停止5s-反转2s-停止
 void servo_progress2(void)
 {

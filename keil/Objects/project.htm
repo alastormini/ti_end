@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\Objects\project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Wed Jul 23 17:06:50 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6220000: Last Updated: Thu Jul 24 15:06:57 2025
 <BR><P>
-<H3>Maximum Stack Usage =        232 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        216 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-__rt_entry_main &rArr; main &rArr; uart_process &rArr; oled_show_uart1_bytes &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
+__rt_entry_main &rArr; main &rArr; uart_process &rArr; oled_show_uart1_bytes &rArr; OLED_Refresh &rArr; OLED_WR_Byte &rArr; Send_Byte &rArr; delay_us
 <P>
 <H3>
 Mutually Recursive functions
@@ -190,8 +190,8 @@ Global Symbols
 <P><STRONG><a name="[9a]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[2c]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 232 + Unknown Stack Size
-<LI>Call Chain = __rt_entry_main &rArr; main &rArr; uart_process &rArr; oled_show_uart1_bytes &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
+<BR><BR>[Stack]<UL><LI>Max Depth = 216 + Unknown Stack Size
+<LI>Call Chain = __rt_entry_main &rArr; main &rArr; uart_process &rArr; oled_show_uart1_bytes &rArr; OLED_Refresh &rArr; OLED_WR_Byte &rArr; Send_Byte &rArr; delay_us
 </UL>
 <BR>[Calls]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[2e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
@@ -328,8 +328,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sputc
 <LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_common
 </UL>
-<BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show_uart1_bytes
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_process
+<BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_process
 </UL>
 
 <P><STRONG><a name="[40]"></a>_printf_pre_padding</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, _printf_pad.o(.text))
@@ -536,7 +535,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Refresh
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_progress
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_first
+<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_first
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;board_init
 </UL>
 
@@ -586,7 +585,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show_uart1_bytes
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_progress
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_first
+<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_first
 </UL>
 
 <P><STRONG><a name="[49]"></a>OLED_WR_Byte</STRONG> (Thumb, 156 bytes, Stack size 32 bytes, oled.o(.text.OLED_WR_Byte))
@@ -599,8 +598,8 @@ Global Symbols
 <LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Init
 </UL>
 
-<P><STRONG><a name="[60]"></a>SYSCFG_DL_GPIO_init</STRONG> (Thumb, 152 bytes, Stack size 20 bytes, ti_msp_dl_config.o(.text.SYSCFG_DL_GPIO_init))
-<BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = SYSCFG_DL_GPIO_init
+<P><STRONG><a name="[60]"></a>SYSCFG_DL_GPIO_init</STRONG> (Thumb, 160 bytes, Stack size 16 bytes, ti_msp_dl_config.o(.text.SYSCFG_DL_GPIO_init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = SYSCFG_DL_GPIO_init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYSCFG_DL_init
 </UL>
@@ -718,10 +717,11 @@ Global Symbols
 <LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;servo_progress1
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;board_init
 </UL>
 
 <P><STRONG><a name="[13]"></a>TIMG0_IRQHandler</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, bsp_sg90.o(.text.TIMG0_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = TIMG0_IRQHandler &rArr; servo_progress1 &rArr; Set_Servo_Angle &rArr; __aeabi_fdiv
+<BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = TIMG0_IRQHandler &rArr; servo_progress1 &rArr; Set_Servo_Angle &rArr; __aeabi_fdiv
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;servo_progress1
 </UL>
@@ -744,28 +744,30 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_exit
 </UL>
 
-<P><STRONG><a name="[6b]"></a>board_init</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, board.o(.text.board_init))
-<BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = board_init &rArr; OLED_Init &rArr; OLED_Refresh &rArr; OLED_WR_Byte &rArr; Send_Byte &rArr; delay_us
+<P><STRONG><a name="[6b]"></a>board_init</STRONG> (Thumb, 64 bytes, Stack size 24 bytes, board.o(.text.board_init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 184<LI>Call Chain = board_init &rArr; oled_first &rArr; OLED_Clear &rArr; OLED_Refresh &rArr; OLED_WR_Byte &rArr; Send_Byte &rArr; delay_us
 </UL>
 <BR>[Calls]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
 <LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Init
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Set_Servo_Angle
 <LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SYSCFG_DL_init
+<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_first
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[6c]"></a>buzzer</STRONG> (Thumb, 44 bytes, Stack size 24 bytes, buzzer.o(.text.buzzer))
+<P><STRONG><a name="[6d]"></a>buzzer</STRONG> (Thumb, 44 bytes, Stack size 24 bytes, buzzer.o(.text.buzzer))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = buzzer &rArr; delay_ms
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
+<BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_process
 </UL>
 
-<P><STRONG><a name="[6d]"></a>delay_ms</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, board.o(.text.delay_ms))
+<P><STRONG><a name="[6e]"></a>delay_ms</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, board.o(.text.delay_ms))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = delay_ms
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer
+<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer
 </UL>
 
 <P><STRONG><a name="[4a]"></a>delay_us</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, board.o(.text.delay_us))
@@ -776,29 +778,30 @@ Global Symbols
 <LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Refresh
 </UL>
 
-<P><STRONG><a name="[2d]"></a>main</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, empty.o(.text.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 232 + Unknown Stack Size
-<LI>Call Chain = main &rArr; uart_process &rArr; oled_show_uart1_bytes &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
+<P><STRONG><a name="[2d]"></a>main</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, empty.o(.text.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 216 + Unknown Stack Size
+<LI>Call Chain = main &rArr; uart_process &rArr; oled_show_uart1_bytes &rArr; OLED_Refresh &rArr; OLED_WR_Byte &rArr; Send_Byte &rArr; delay_us
 </UL>
 <BR>[Calls]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;servo_progress2
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_process
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_progress
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_first
+<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_first
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;board_init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[6e]"></a>oled_first</STRONG> (Thumb, 68 bytes, Stack size 24 bytes, oled_show.o(.text.oled_first))
+<P><STRONG><a name="[6c]"></a>oled_first</STRONG> (Thumb, 68 bytes, Stack size 24 bytes, oled_show.o(.text.oled_first))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = oled_first &rArr; OLED_Clear &rArr; OLED_Refresh &rArr; OLED_WR_Byte &rArr; Send_Byte &rArr; delay_us
 </UL>
 <BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowString
 <LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Clear
 </UL>
-<BR>[Called By]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;board_init
+<LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[6f]"></a>oled_progress</STRONG> (Thumb, 580 bytes, Stack size 32 bytes, oled_show.o(.text.oled_progress))
+<P><STRONG><a name="[6f]"></a>oled_progress</STRONG> (Thumb, 588 bytes, Stack size 32 bytes, oled_show.o(.text.oled_progress))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = oled_progress &rArr; OLED_Clear &rArr; OLED_Refresh &rArr; OLED_WR_Byte &rArr; Send_Byte &rArr; delay_us
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowNum
@@ -810,19 +813,17 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[73]"></a>oled_show_uart1_bytes</STRONG> (Thumb, 72 bytes, Stack size 32 bytes, uart.o(.text.oled_show_uart1_bytes))
-<BR><BR>[Stack]<UL><LI>Max Depth = 160 + Unknown Stack Size
-<LI>Call Chain = oled_show_uart1_bytes &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
+<P><STRONG><a name="[73]"></a>oled_show_uart1_bytes</STRONG> (Thumb, 144 bytes, Stack size 24 bytes, uart.o(.text.oled_show_uart1_bytes))
+<BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = oled_show_uart1_bytes &rArr; OLED_Refresh &rArr; OLED_WR_Byte &rArr; Send_Byte &rArr; delay_us
 </UL>
 <BR>[Calls]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Refresh
 <LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_ShowString
-<LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_process
 </UL>
 
-<P><STRONG><a name="[6a]"></a>servo_progress1</STRONG> (Thumb, 212 bytes, Stack size 8 bytes, bsp_sg90.o(.text.servo_progress1))
-<BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = servo_progress1 &rArr; Set_Servo_Angle &rArr; __aeabi_fdiv
+<P><STRONG><a name="[6a]"></a>servo_progress1</STRONG> (Thumb, 92 bytes, Stack size 24 bytes, bsp_sg90.o(.text.servo_progress1))
+<BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = servo_progress1 &rArr; Set_Servo_Angle &rArr; __aeabi_fdiv
 </UL>
 <BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Set_Servo_Angle
 </UL>
@@ -837,12 +838,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[70]"></a>uart_process</STRONG> (Thumb, 2548 bytes, Stack size 72 bytes, uart.o(.text.uart_process))
-<BR><BR>[Stack]<UL><LI>Max Depth = 232 + Unknown Stack Size
-<LI>Call Chain = uart_process &rArr; oled_show_uart1_bytes &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
+<P><STRONG><a name="[70]"></a>uart_process</STRONG> (Thumb, 3560 bytes, Stack size 72 bytes, uart.o(.text.uart_process))
+<BR><BR>[Stack]<UL><LI>Max Depth = 216 + Unknown Stack Size
+<LI>Call Chain = uart_process &rArr; oled_show_uart1_bytes &rArr; OLED_Refresh &rArr; OLED_WR_Byte &rArr; Send_Byte &rArr; delay_us
 </UL>
 <BR>[Calls]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_show_uart1_bytes
-<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer
+<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer
 <LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main

@@ -9,6 +9,7 @@ extern uint32_t servo1_start_tick ;
 extern uint8_t servo1_step;
 extern uint8_t servo1_command_received; // 新增标志位
 extern uint8_t oled_pack_flag;
+extern uint8_t servo_flag;
 void oled_show_uart1_bytes(uint8_t frameIndex);
 
 typedef struct {

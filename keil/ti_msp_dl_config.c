@@ -185,12 +185,24 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 
     DL_GPIO_initDigitalOutput(OLED_SDA_IOMUX);
 
-    DL_GPIO_clearPins(GPIOA, buzzer_beep_PIN);
+    DL_GPIO_initDigitalOutput(led_led1_IOMUX);
+
+    DL_GPIO_initDigitalOutput(led_led2_IOMUX);
+
+    DL_GPIO_initDigitalOutput(led_led3_IOMUX);
+
+    DL_GPIO_clearPins(GPIOA, buzzer_beep_PIN |
+		led_led1_PIN |
+		led_led2_PIN |
+		led_led3_PIN);
     DL_GPIO_setPins(GPIOA, OLED_SCL_PIN |
 		OLED_SDA_PIN);
     DL_GPIO_enableOutput(GPIOA, buzzer_beep_PIN |
 		OLED_SCL_PIN |
-		OLED_SDA_PIN);
+		OLED_SDA_PIN |
+		led_led1_PIN |
+		led_led2_PIN |
+		led_led3_PIN);
     DL_GPIO_setUpperPinsPolarity(GPIOA, DL_GPIO_PIN_26_EDGE_RISE |
 		DL_GPIO_PIN_25_EDGE_RISE |
 		DL_GPIO_PIN_24_EDGE_RISE |

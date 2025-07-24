@@ -67,14 +67,14 @@ void oled_progress(void)
 						OLED_Clear();
 						send_uart_packet(01,keynum);
 						OLED_ShowString(0,0, (uint8_t *)"model.position2", 16, 1);
-						keynum=0;
+						keynum=1;
 						OLED_ShowNum(0, 20, keynum, 2, 16, 1);
 						OLED_Refresh();
 					}
 					if(range1==4)
 					{
 						send_uart_packet(02,keynum);
-						keynum=0;
+						keynum=1;
 						oled_first();
 						range1=0;
 						key1_flag=0;
@@ -93,9 +93,7 @@ void oled_progress(void)
 						range1=0;
 						key1_flag=0;
 					break;
-				case 3:
-						OLED_Clear();
-						OLED_ShowString(0,0, (uint8_t *)"mode 3 ok", 16, 1);
+				case 0:
 						oled_first();
 						range1=0;
 						key1_flag=0;

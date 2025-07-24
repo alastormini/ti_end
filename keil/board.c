@@ -14,7 +14,7 @@
 #include "bsp_sg90.h"
 #include <stdlib.h>
 #include "oled.h"
-
+#include "oled_show.h"
 #define RE_0_BUFF_LEN_MAX	128
 
 void board_init(void)
@@ -35,12 +35,12 @@ void board_init(void)
 
 	OLED_Init();     //初始化OLED
     OLED_Clear();
-
+	oled_first();
     //使能定时器中断
     NVIC_EnableIRQ(TIMER_0_INST_INT_IRQN);
 	NVIC_EnableIRQ(TIMER_1_INST_INT_IRQN);
 //挂钩初始化角度
-//	Set_Servo_Angle(1,160);
+	Set_Servo_Angle(1,0);
 //	Set_Servo_Angle(2,160);
 //	Set_Servo_Angle(3,160);
 //	Set_Servo_Angle(4,160);

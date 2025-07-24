@@ -132,10 +132,10 @@ extern "C" {
 #define GPIO_servo1_C1_IOMUX_FUNC                    IOMUX_PINCM44_PF_TIMA1_CCP1
 #define GPIO_servo1_C1_IDX                                   DL_TIMER_CC_1_INDEX
 /* GPIO defines for channel 1 */
-#define GPIO_servo1_C1_CMPL_PORT                                           GPIOA
-#define GPIO_servo1_C1_CMPL_PIN                                   DL_GPIO_PIN_16
-#define GPIO_servo1_C1_CMPL_IOMUX                                (IOMUX_PINCM38)
-#define GPIO_servo1_C1_CMPL_IOMUX_FUNC          IOMUX_PINCM38_PF_TIMA1_CCP1_CMPL
+#define GPIO_servo1_C1_CMPL_PORT                                           GPIOB
+#define GPIO_servo1_C1_CMPL_PIN                                    DL_GPIO_PIN_5
+#define GPIO_servo1_C1_CMPL_IOMUX                                (IOMUX_PINCM18)
+#define GPIO_servo1_C1_CMPL_IOMUX_FUNC          IOMUX_PINCM18_PF_TIMA1_CCP1_CMPL
 
 
 
@@ -235,6 +235,18 @@ extern "C" {
 /* Defines for SDA: GPIOA.1 with pinCMx 2 on package pin 34 */
 #define OLED_SDA_PIN                                             (DL_GPIO_PIN_1)
 #define OLED_SDA_IOMUX                                            (IOMUX_PINCM2)
+/* Port definition for Pin Group led */
+#define led_PORT                                                         (GPIOA)
+
+/* Defines for led1: GPIOA.12 with pinCMx 34 on package pin 5 */
+#define led_led1_PIN                                            (DL_GPIO_PIN_12)
+#define led_led1_IOMUX                                           (IOMUX_PINCM34)
+/* Defines for led2: GPIOA.15 with pinCMx 37 on package pin 8 */
+#define led_led2_PIN                                            (DL_GPIO_PIN_15)
+#define led_led2_IOMUX                                           (IOMUX_PINCM37)
+/* Defines for led3: GPIOA.16 with pinCMx 38 on package pin 9 */
+#define led_led3_PIN                                            (DL_GPIO_PIN_16)
+#define led_led3_IOMUX                                           (IOMUX_PINCM38)
 
 
 

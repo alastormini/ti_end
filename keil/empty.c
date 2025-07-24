@@ -14,6 +14,10 @@ int main(void)
     //开发板初始化
 	board_init();
 	//oled初始显示
+	DL_GPIO_clearPins(led_PORT,led_led1_PIN);
+	DL_GPIO_clearPins(led_PORT,led_led2_PIN);
+	DL_GPIO_clearPins(led_PORT,led_led3_PIN);
+
 	oled_first();
       while(1)
       {
